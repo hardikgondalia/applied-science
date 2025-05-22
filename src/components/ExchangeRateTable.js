@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { currencyList } from '../data/currencyList';
+import { fetchExchangeRates }  from '../utils/api';
 
-const ExchangeRateTable = ({ currencies, setCurrencies, dates, setDates, rates, updateRate }) => {
+const ExchangeRateTable = ({ currencies, setCurrencies, dates, setDates, rates,currencyList }) => {
   const removeCurrency = (currency) => {
     if (currencies.length > 3) {
       setCurrencies(currencies.filter(c => c !== currency));
@@ -32,10 +32,24 @@ const ExchangeRateTable = ({ currencies, setCurrencies, dates, setDates, rates, 
   const addDate = () => {
     const today = new Date();
     const formatted = today.toISOString().split('T')[0];
-    if (!dates.includes(formatted)) {
+    // if (!dates.includes(formatted)) {
       setDates([...dates, formatted]);
+    // }
+  };
+
+  useEffect(() => {
+  const loadRates = async () => {
+    try {
+      const ratesData = await fetchExchangeRates('2024-05-15', 'GBP');
+      console.log(ratesData);
+      // → ratesData.gbp = { usd: 1.25, eur: 1.14, ... }
+    } catch (err) {
+      console.error('Error fetching exchange rates', err);
     }
   };
+
+  loadRates();
+}, []);
 
   return (
     <div>
