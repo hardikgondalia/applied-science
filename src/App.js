@@ -1,4 +1,3 @@
-// App.js
 import React, { useState, useEffect } from 'react';
 import BaseCurrencySelector from './components/BaseCurrencySelector';
 import ExchangeRateTable from './components/ExchangeRateTable';
