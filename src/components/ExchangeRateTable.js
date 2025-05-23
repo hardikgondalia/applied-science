@@ -52,25 +52,28 @@ const ExchangeRateTable = ({ currencies, setCurrencies, dates, setDates, rates,c
 }, []);
 
   return (
-    <div>
-      <table className="table-auto border border-collapse w-full mb-4">
+    <div className='d-flex justify-content-center flex-column  mx-5'>
+      <div  className='d-flex justify-content-center'>
+      <table className="table-auto border border-collapse w-75 mb-4">
         <thead>
           <tr>
             <th className="border px-2 py-1">Currency</th>
             {dates.map((date, idx) => (
               <th key={idx} className="border px-2 py-1">
-                <DatePicker
+                <div className='d-flex align-items-center justify-content-between'>
+                <DatePicker 
                   selected={new Date(date)}
                   onChange={(d) => changeDate(idx, d)}
                   maxDate={new Date()}
                   minDate={new Date(Date.now() - 90 * 24 * 60 * 60 * 1000)}
                   dateFormat="yyyy-MM-dd"
-                  className="border px-1"
+                  className="border-0 p-2 fw-normal "
                 />
-                <button onClick={() => removeDate(date)} className="ml-2 text-red-500">✖</button>
+                <button onClick={() => removeDate(date)} className="ms-3 p-0 d- flex fs-6 bg-transparent rounded-pill border-0">✖</button>
+                </div>
               </th>
             ))}
-            <th className="border px-2 py-1">Actions</th>
+            <th className="border text-center px-2 py-1">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -80,7 +83,7 @@ const ExchangeRateTable = ({ currencies, setCurrencies, dates, setDates, rates,c
                 <select
                   value={currency}
                   onChange={e => changeCurrency(rowIdx, e.target.value)}
-                  className="border p-1"
+                  className="border-0 w-100 p-1"
                 >
                   {currencyList.map(c => (
                     <option key={c.code} value={c.code}>{c.code}</option>
@@ -93,18 +96,21 @@ const ExchangeRateTable = ({ currencies, setCurrencies, dates, setDates, rates,c
                 </td>
               ))}
               <td className="border px-2 py-1">
-                <button onClick={() => removeCurrency(currency)} className="text-red-500">Remove</button>
+                <button onClick={() => removeCurrency(currency)} className="text-danger border-1 border-danger rounded-2 bg-transparent p-2 w-100 d-block">Remove</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      </div>
+      <div className='d-flex w-75 mx-auto justify-content-end'>
       <button
         onClick={addDate}
-        className="bg-green-500 text-white px-4 py-1 rounded"
+        className="bg-green-500 text-dark px-4 py-1 rounded "
       >
         Add Date
       </button>
+      </div>
     </div>
   );
 };

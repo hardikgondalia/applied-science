@@ -1,0 +1,22 @@
+
+*{
+    font-family: sans-serif;
+}
+.heading{
+    color:#000;
+}
+.currency-select{
+    border-color: #b9acac2e;
+    &:focus-visible{
+        outline: unset;
+    }
+}
+select{
+    &:focus-visible{
+        outline: unset;
+    }
+}
+.add-currency-button{
+    margin-top: -35px;
+    margin-left: 16%;
+}

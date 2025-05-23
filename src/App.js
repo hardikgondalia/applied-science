@@ -29,6 +29,7 @@ useEffect(() => {
     <div className="p-4">
       {currencyList.length > 0 ? (
         <>
+        <h3 className='heading d-flex justify-content-center w-100 m-0 py-4 fw-bolder'>Exchange Rate Viewer</h3>
           <BaseCurrencySelector
             baseCurrency={baseCurrency}
             setBaseCurrency={setBaseCurrency}
@@ -42,7 +43,9 @@ useEffect(() => {
             rates={rates}
             currencyList={currencyList}
           />
-          <button onClick={() => setModalOpen(true)}>Add Currency</button>
+             <div className='d-flex w-75 mx-auto justify-content-start ms-5'>
+          <button onClick={() => setModalOpen(true)} className=' bg-green-500 text-dark px-4 py-1 rounded add-currency-button'>Add Currency</button>
+          </div>
           <AddCurrencyModal
             open={modalOpen}
             setOpen={setModalOpen}
