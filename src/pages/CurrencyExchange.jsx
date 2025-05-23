@@ -40,11 +40,11 @@ useMemo(() => {
 }, []);
 
   return (
-    <div className="p-4">
+    <div className="p-2 pb-0 currency-block">
       {currencyList.length > 0 ? (
         <>
           <h3 className="heading d-flex justify-content-center w-100">Exchange Rate Viewer</h3>
-          <div className="d-flex align-items-baseline justify-content-center mb-4">
+          <div className="d-flex align-items-baseline justify-content-center mb-2">
             <div className='py-4'>
               <BaseCurrencySelector baseCurrency={baseCurrency} setBaseCurrency={setBaseCurrency} currencyList={currencyList} />
               <div className="d-flex w-100 justify-content-start">
@@ -70,6 +70,9 @@ useMemo(() => {
             selectedCurrencies={currencies}
             setSelectedCurrencies={setCurrencies}
           />
+          <div className='footer d-flex justify-content-center px-3'>
+            <p className='p-0 m-0 text-light'>Developed by: Hardik Gondalia</p>
+          </div>
         </>
       ) : (
         <p>Loading currencies...</p>

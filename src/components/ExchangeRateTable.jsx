@@ -48,7 +48,7 @@ useEffect(() => {
     <div className="d-flex justify-content-center flex-column mx-5">
       <div className="d-flex justify-content-center">
         <div className="table-responsive-wrapper rounded mb-4">
-          <table className="table-auto exchange-table border border-collapse mb-4 table table-light table-striped table-borderless">
+          <table className="table-auto exchange-table border border-collapse mb-0 table table-light table-striped table-borderless">
             <thead>
               <tr>
                 <th className="text-light sticky-col left-col border p-2">Currency</th>

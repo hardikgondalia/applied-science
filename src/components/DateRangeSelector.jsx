@@ -25,7 +25,7 @@ const DateRangeSelector = ({ setDates }) => {
   }, [range, setDates]);
 
   return (
-    <div className="ms-5">
+    <div className="ms-5 date-range-select">
       <DateRange
         editableDateInputs={true}
         onChange={item => setRange([item.selection])}
