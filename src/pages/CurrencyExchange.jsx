@@ -1,0 +1,80 @@
+import React, { useEffect, useState ,useMemo} from 'react';
+import { fetchCurrencyList } from '../utils/api';
+import BaseCurrencySelector from '../components/BaseCurrencySelector';
+import ExchangeRateTable from '../components/ExchangeRateTable';
+import AddCurrencyModal from '../components/AddCurrencyModal';
+import DateRangeSelector from '../components/DateRangeSelector'
+
+const CurrencyExchange = () => {
+    const [currencyList, setCurrencyList] = useState([]);
+  const [baseCurrency, setBaseCurrency] = useState('GBP');
+  const [currencies, setCurrencies] = useState(['USD', 'EUR', 'JPY', 'CHF', 'CAD', 'AUD', 'ZAR']);
+  const [dates, setDates] = useState([new Date().toISOString().split('T')[0]]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const todayStr = new Date().toISOString().split('T')[0];
+
+// Create reorderedDates to pass to ExchangeRateTable
+const reorderedDates = React.useMemo(() => {
+  // Remove today from dates if exists
+  const filteredDates = dates.filter(date => date !== todayStr);
+  // Sort filteredDates descending
+  filteredDates.sort((a, b) => (a < b ? 1 : -1));
+  // Return [today, ...rest descending]
+  return [todayStr, ...filteredDates];
+}, [dates, todayStr]);
+
+const fetchCurrency = () => {
+  fetchCurrencyList()
+    .then((data) => {
+      const formatted = Object.entries(data).map(([code, name]) => ({
+        code: code.toUpperCase(), // optional: uppercase like "AED"
+        name,
+      }));
+      setCurrencyList(formatted);
+    })
+    .catch((err) => console.error("Error fetching currency list:", err));
+};
+
+useMemo(() => {
+  fetchCurrency();
+}, []);
+
+  return (
+    <div className="p-4">
+      {currencyList.length > 0 ? (
+        <>
+          <h3 className="heading d-flex justify-content-center w-100">Exchange Rate Viewer</h3>
+          <div className="d-flex align-items-baseline justify-content-center mb-4">
+            <div className='py-4'>
+              <BaseCurrencySelector baseCurrency={baseCurrency} setBaseCurrency={setBaseCurrency} currencyList={currencyList} />
+              <div className="d-flex w-100 justify-content-start">
+                <button onClick={() => setModalOpen(true)} className="bg-green-500 text-dark px-4 py-1 rounded">
+                  Add Currency
+                </button>
+              </div>
+            </div>
+            <DateRangeSelector setDates={setDates} />
+          </div>
+          <ExchangeRateTable
+            currencies={currencies}
+            setCurrencies={setCurrencies}
+            dates={reorderedDates}
+            setDates={setDates}
+            baseCurrency={baseCurrency}
+            currencyList={currencyList}
+          />
+          <AddCurrencyModal
+            open={modalOpen}
+            setOpen={setModalOpen}
+            availableCurrencies={currencyList}
+            selectedCurrencies={currencies}
+            setSelectedCurrencies={setCurrencies}
+          />
+        </>
+      ) : (
+        <p>Loading currencies...</p>
+      )}
+    </div>
+  );
+}
+export default CurrencyExchange;

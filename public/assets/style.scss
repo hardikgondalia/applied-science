@@ -26,11 +26,6 @@ select {
   padding: 10px;
 }
 
-.add-currency-button {
-  margin-top: -35px;
-  // margin-left: 16%;
-}
-
 .table-responsive-wrapper {
   overflow-x: auto;
   max-width: 100%;
@@ -38,8 +33,9 @@ select {
   border: 1px solid #0000004d;
   overflow: auto;
 }
-.exchange-table{
-  thead{
+table.exchange-table{
+  thead tr th{
+  font-weight: 500;
   background-color: #565145;
 }
 }
