@@ -7,7 +7,7 @@ import { addDays, format } from 'date-fns';
 const DateRangeSelector = ({ setDates }) => {
   const [range, setRange] = useState([
     {
-      startDate: addDays(new Date(), -6), // Last 7 days including today
+      startDate: addDays(new Date(), -6),
       endDate: new Date(),
       key: 'selection',
     },

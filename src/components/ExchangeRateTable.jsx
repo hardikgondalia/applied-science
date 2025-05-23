@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { fetchExchangeRates } from '../utils/api';
+import DeleteImage from '../../public/assets/images/delete.png';
 
-const ExchangeRateTable = ({ currencies, setCurrencies, dates, setDates, baseCurrency, currencyList }) => {
-  const [rates, setRates] = useState({}); // Holds exchange rate data
-
+const ExchangeRateTable = ({ currencies, setCurrencies, dates, baseCurrency }) => {
+  const [rates, setRates] = useState({});
   const removeCurrency = (currency) => {
     if (currencies.length > 3) {
       setCurrencies(currencies.filter(c => c !== currency));
@@ -19,30 +18,30 @@ const ExchangeRateTable = ({ currencies, setCurrencies, dates, setDates, baseCur
   };
 
   useEffect(() => {
-  const loadRates = async () => {
-    try {
-      const allRates = {}; // clear old rates
+    const loadRates = async () => {
+      try {
+        const allRates = {};
 
-      for (const date of dates) {
-        const ratesData = await fetchExchangeRates(date, baseCurrency.toLowerCase());
-        const currencyRates = ratesData[baseCurrency.toLowerCase()];
-        allRates[date] = currencyRates;
+        for (const date of dates) {
+          const ratesData = await fetchExchangeRates(date, baseCurrency.toLowerCase());
+          const currencyRates = ratesData[baseCurrency.toLowerCase()];
+          allRates[date] = currencyRates;
+        }
+
+        setRates(allRates);
+      } catch (err) {
+        console.error('Error fetching exchange rates', err);
       }
+    };
 
-      setRates(allRates); // update rates
-    } catch (err) {
-      console.error('Error fetching exchange rates', err);
+    if (dates.length > 0 && baseCurrency) {
+      loadRates();
     }
-  };
+  }, [dates, baseCurrency]);
 
-  if (dates.length > 0 && baseCurrency) {
-    loadRates();
-  }
-}, [dates, baseCurrency]);
-
-useEffect(() => {
-  setRates({});
-}, [baseCurrency]);
+  useEffect(() => {
+    setRates({});
+  }, [baseCurrency]);
 
   return (
     <div className="d-flex justify-content-center flex-column mx-5">
@@ -66,13 +65,6 @@ useEffect(() => {
                 <tr key={rowIdx}>
                   <td className="sticky-col left-col border px-2 py-1 text-center">
                     {currency}
-                    {/* 
-                    code to get select in rows
-                    <select value={currency} onChange={(e) => changeCurrency(rowIdx, e.target.value)} className="border-0 w-100 p-1">
-                      {currencyList.map((c) => (
-                        <option key={c.code} value={c.code}>{c.code}</option>
-                      ))}
-                    </select> */}
                   </td>
 
                   {dates.map((date, colIdx) => (
@@ -86,7 +78,7 @@ useEffect(() => {
                       onClick={() => removeCurrency(currency)}
                       className="text-danger border-1 border-danger rounded-2 bg-transparent p-2 w-100 d-block"
                     >
-                      <img src={"/assets/images/delete.png"} alt="Delete" />
+                      <img src={DeleteImage} alt="Delete" width={24} height={24} />
                     </button>
                   </td>
                 </tr>

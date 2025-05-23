@@ -25,37 +25,43 @@ const AddCurrencyModal = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white p-4 rounded shadow-lg w-80">
-        <h2 className="text-lg mb-3 font-semibold">Add Currency</h2>
-        <select
-          className="border p-2 w-full mb-3"
-          value={selected}
-          onChange={e => setSelected(e.target.value)}
-        >
-          <option value="">Select a currency</option>
-          {availableCurrencies
-            .filter(c => !selectedCurrencies.includes(c.code))
-            .map(currency => (
-              <option key={currency.code} value={currency.code}>
-                {currency.code} - {currency.name}
-              </option>
-          ))}
-        </select>
-        <div className="flex justify-end gap-2">
-          <button
-            onClick={closeModal}
-            className="border px-3 py-1 rounded text-sm"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={addCurrency}
-            className="bg-blue-500 text-white px-3 py-1 rounded text-sm"
-            disabled={!selected}
-          >
-            Add
-          </button>
+    <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+      <div className="modal-dialog">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Add Currency</h5>
+          </div>
+          <div className="modal-body">
+            <select
+              className="form-select mb-3"
+              value={selected}
+              onChange={e => setSelected(e.target.value)}
+            >
+              <option value="">Select a currency</option>
+              {availableCurrencies
+                .filter(c => !selectedCurrencies.includes(c.code))
+                .map(currency => (
+                  <option key={currency.code} value={currency.code}>
+                    {currency.code} - {currency.name}
+                  </option>
+                ))}
+            </select>
+          </div>
+          <div className="modal-footer">
+            <button
+              onClick={closeModal}
+              className="btn btn-secondary"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={addCurrency}
+              className="btn btn-primary"
+              disabled={!selected}
+            >
+              Add
+            </button>
+          </div>
         </div>
       </div>
     </div>

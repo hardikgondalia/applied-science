@@ -1,4 +1,4 @@
-import React, { useEffect, useState ,useMemo} from 'react';
+import React, { useState ,useMemo} from 'react';
 import { fetchCurrencyList } from '../utils/api';
 import BaseCurrencySelector from '../components/BaseCurrencySelector';
 import ExchangeRateTable from '../components/ExchangeRateTable';
