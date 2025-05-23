@@ -42,12 +42,14 @@ useEffect(() => {
       {currencyList.length > 0 ? (
         <>
         <h3 className='heading d-flex justify-content-center w-100 m-0 py-4 fw-bolder'>Exchange Rate Viewer</h3>
+        <div className='d-flex align-items-baseline justify-content-center mb-4'>
           <BaseCurrencySelector
             baseCurrency={baseCurrency}
             setBaseCurrency={setBaseCurrency}
             currencyList={currencyList}
           />
           <DateRangeSelector setDates={setDates} />
+          </div>
           <ExchangeRateTable
             currencies={currencies}
             setCurrencies={setCurrencies}

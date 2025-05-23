@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { fetchExchangeRates }  from '../utils/api';
 
+
 const ExchangeRateTable = ({ currencies, setCurrencies, dates, setDates, rates,currencyList }) => {
   const removeCurrency = (currency) => {
     if (currencies.length > 3) {
@@ -63,24 +64,22 @@ const ExchangeRateTable = ({ currencies, setCurrencies, dates, setDates, rates,c
   return (
     <div className="d-flex justify-content-center flex-column  mx-5">
       <div className="d-flex justify-content-center">
-        <div className="table-responsive-wrapper">
-          <table className="table-auto border border-collapse mb-4">
+        <div className="table-responsive-wrapper rounded">
+          <table className="table-auto border border-collapse mb-4 table table-success table-striped table-borderless">
             <thead>
-              <tr>
-                <th className="sticky-col left-col border px-2 py-1 bg-white">Currency</th>
-
-                {/* Scrollable date columns */}
+              <tr> 
+                <th className="bg-dark text-light sticky-col left-col border p-2">Currency</th>
                 {dates.map((date, idx) => (
-                  <th key={idx} className="date-col border px-2 py-1">{date}</th>
+                  <th key={idx} className=" bg-dark text-light date-col border p-2">{date}</th>
                 ))}
 
-                <th className="sticky-col right-col border text-center px-2 py-1 bg-white">Actions</th>
+                <th className="sticky-col bg-dark text-light right-col border text-center p-2">Actions</th>
               </tr>
             </thead>
             <tbody>
               {currencies.map((currency, rowIdx) => (
                 <tr key={rowIdx}>
-                  <td className="sticky-col left-col border px-2 py-1 bg-white">
+                  <td className="sticky-col left-col border px-2 py-1">
                     <select value={currency} onChange={(e) => changeCurrency(rowIdx, e.target.value)} className="border-0 w-100 p-1">
                       {currencyList.map((c) => (
                         <option key={c.code} value={c.code}>
@@ -97,12 +96,13 @@ const ExchangeRateTable = ({ currencies, setCurrencies, dates, setDates, rates,c
                     </td>
                   ))}
 
-                  <td className="sticky-col right-col border px-2 py-1 bg-white">
+                  <td className="sticky-col right-col border px-2 py-1">
                     <button
                       onClick={() => removeCurrency(currency)}
                       className="text-danger border-1 border-danger rounded-2 bg-transparent p-2 w-100 d-block"
                     >
-                      Remove
+                     <img src={"/assets/images/delete-svg.svg"} />
+                  
                     </button>
                   </td>
                 </tr>

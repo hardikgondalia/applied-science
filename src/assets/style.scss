@@ -1,33 +1,53 @@
+* {
+  font-family: sans-serif;
+}
 
-*{
-    font-family: sans-serif;
+.heading {
+  color: #000;
 }
-.heading{
-    color:#000;
+
+.currency-select {
+  border-color: #b9acac2e;
+
+  &:focus-visible {
+    outline: unset;
+  }
 }
-.currency-select{
-    border-color: #b9acac2e;
-    &:focus-visible{
-        outline: unset;
-    }
+
+select {
+  background: transparent;
+  &:focus-visible {
+    outline: unset;
+  }
 }
-select{
-    &:focus-visible{
-        outline: unset;
-    }
+
+.date-col {
+  min-width: 100px;
+  padding: 10px;
 }
-.add-currency-button{
-    margin-top: -35px;
-    margin-left: 16%;
+
+.add-currency-button {
+  margin-top: -35px;
+  margin-left: 16%;
 }
+
 .table-responsive-wrapper {
   overflow-x: auto;
   max-width: 100%;
+  width: 100%;
+  border: 1px solid #0000004d;
+  overflow: auto;
 }
-
+.table-auto{
+  min-width: 100%;
+  th{
+    background-color: #565145;
+  }
+}
 /* Sticky columns */
 .sticky-col {
   position: sticky;
+  min-width: 120px;
   z-index: 2;
 }
 
