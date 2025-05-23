@@ -51,9 +51,9 @@ useEffect(() => {
           <table className="table-auto exchange-table border border-collapse mb-0 table table-light table-striped table-borderless">
             <thead>
               <tr>
-                <th className="text-light sticky-col left-col border p-2">Currency</th>
+                <th className="text-light sticky-col left-col border p-2 text-center">Currency</th>
                 {dates.map((date, idx) => (
-                  <th key={idx} className="text-light date-col border p-2">
+                  <th key={idx} className="text-light date-col border p-2 text-center">
                     {date}
                   </th>
                 ))}
@@ -64,8 +64,7 @@ useEffect(() => {
             <tbody>
               {currencies.map((currency, rowIdx) => (
                 <tr key={rowIdx}>
-                  <td className="sticky-col left-col border px-2 py-1">
-                    {" "}
+                  <td className="sticky-col left-col border px-2 py-1 text-center">
                     {currency}
                     {/* 
                     code to get select in rows
@@ -77,17 +76,17 @@ useEffect(() => {
                   </td>
 
                   {dates.map((date, colIdx) => (
-                    <td key={colIdx} className="date-col border px-2 py-1">
+                    <td key={colIdx} className="date-col border px-2 py-1 text-center">
                       {rates[date]?.[currency.toLowerCase()] !== undefined ? rates[date][currency.toLowerCase()].toFixed(2) : "-"}
                     </td>
                   ))}
 
-                  <td className="sticky-col right-col border px-2 py-1">
+                  <td className="sticky-col right-col border px-2 py-1 text-center">
                     <button
                       onClick={() => removeCurrency(currency)}
                       className="text-danger border-1 border-danger rounded-2 bg-transparent p-2 w-100 d-block"
                     >
-                      <img src={"../public/assets/images/delete-svg.svg"} alt="Delete" />
+                      <img src={"/assets/images/delete.png"} alt="Delete" />
                     </button>
                   </td>
                 </tr>
