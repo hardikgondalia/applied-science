@@ -20,3 +20,26 @@ select{
     margin-top: -35px;
     margin-left: 16%;
 }
+.table-responsive-wrapper {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+/* Sticky columns */
+.sticky-col {
+  position: sticky;
+  z-index: 2;
+}
+
+.left-col {
+  left: 0;
+}
+
+.right-col {
+  right: 0;
+}
+
+/* Avoid clipping by z-index */
+thead .sticky-col {
+  z-index: 3;
+}

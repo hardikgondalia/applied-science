@@ -30,12 +30,21 @@ const ExchangeRateTable = ({ currencies, setCurrencies, dates, setDates, rates,c
   };
 
   const addDate = () => {
-    const today = new Date();
-    const formatted = today.toISOString().split('T')[0];
-    // if (!dates.includes(formatted)) {
-      setDates([...dates, formatted]);
-    // }
-  };
+  const today = new Date();
+  const formatted = today.toISOString().split('T')[0];
+  // Rule 1: Check if today’s date is already added
+  const dateExists = dates.includes(formatted);
+  // Rule 2: Check if there's already a null date
+  const hasNull = dates.includes(null);
+  // If neither exists, allow adding a blank (null) date
+  if (dateExists && !hasNull) {
+    setDates([...dates, null]);
+  }
+  // If today doesn't exist and null is already present, add today's date instead
+  else if (!dateExists && hasNull) {
+    setDates([...dates.filter((d) => d !== null), formatted]);
+  }
+};
 
   useEffect(() => {
   const loadRates = async () => {
@@ -52,64 +61,60 @@ const ExchangeRateTable = ({ currencies, setCurrencies, dates, setDates, rates,c
 }, []);
 
   return (
-    <div className='d-flex justify-content-center flex-column  mx-5'>
-      <div  className='d-flex justify-content-center'>
-      <table className="table-auto border border-collapse w-75 mb-4">
-        <thead>
-          <tr>
-            <th className="border px-2 py-1">Currency</th>
-            {dates.map((date, idx) => (
-              <th key={idx} className="border px-2 py-1">
-                <div className='d-flex align-items-center justify-content-between'>
-                <DatePicker 
-                  selected={new Date(date)}
-                  onChange={(d) => changeDate(idx, d)}
-                  maxDate={new Date()}
-                  minDate={new Date(Date.now() - 90 * 24 * 60 * 60 * 1000)}
-                  dateFormat="yyyy-MM-dd"
-                  className="border-0 p-2 fw-normal "
-                />
-                <button onClick={() => removeDate(date)} className="ms-3 p-0 d- flex fs-6 bg-transparent rounded-pill border-0">✖</button>
-                </div>
-              </th>
-            ))}
-            <th className="border text-center px-2 py-1">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currencies.map((currency, rowIdx) => (
-            <tr key={rowIdx}>
-              <td className="border px-2 py-1">
-                <select
-                  value={currency}
-                  onChange={e => changeCurrency(rowIdx, e.target.value)}
-                  className="border-0 w-100 p-1"
-                >
-                  {currencyList.map(c => (
-                    <option key={c.code} value={c.code}>{c.code}</option>
+    <div className="d-flex justify-content-center flex-column  mx-5">
+      <div className="d-flex justify-content-center">
+        <div className="table-responsive-wrapper">
+          <table className="table-auto border border-collapse mb-4">
+            <thead>
+              <tr>
+                <th className="sticky-col left-col border px-2 py-1 bg-white">Currency</th>
+
+                {/* Scrollable date columns */}
+                {dates.map((date, idx) => (
+                  <th key={idx} className="date-col border px-2 py-1">{date}</th>
+                ))}
+
+                <th className="sticky-col right-col border text-center px-2 py-1 bg-white">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {currencies.map((currency, rowIdx) => (
+                <tr key={rowIdx}>
+                  <td className="sticky-col left-col border px-2 py-1 bg-white">
+                    <select value={currency} onChange={(e) => changeCurrency(rowIdx, e.target.value)} className="border-0 w-100 p-1">
+                      {currencyList.map((c) => (
+                        <option key={c.code} value={c.code}>
+                          {c.code}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+
+                  {/* Scrollable rate columns */}
+                  {dates.map((date, colIdx) => (
+                    <td key={colIdx} className="date-col border px-2 py-1">
+                      {rates?.[currency]?.[date] ?? "-"}
+                    </td>
                   ))}
-                </select>
-              </td>
-              {dates.map((date, colIdx) => (
-                <td key={colIdx} className="border px-2 py-1">
-                  {rates?.[currency]?.[date] ?? '-'}
-                </td>
+
+                  <td className="sticky-col right-col border px-2 py-1 bg-white">
+                    <button
+                      onClick={() => removeCurrency(currency)}
+                      className="text-danger border-1 border-danger rounded-2 bg-transparent p-2 w-100 d-block"
+                    >
+                      Remove
+                    </button>
+                  </td>
+                </tr>
               ))}
-              <td className="border px-2 py-1">
-                <button onClick={() => removeCurrency(currency)} className="text-danger border-1 border-danger rounded-2 bg-transparent p-2 w-100 d-block">Remove</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div className='d-flex w-75 mx-auto justify-content-end'>
-      <button
-        onClick={addDate}
-        className="bg-green-500 text-dark px-4 py-1 rounded "
-      >
-        Add Date
-      </button>
+      <div className="d-flex w-75 mx-auto justify-content-end">
+        <button onClick={addDate} className="bg-green-500 text-dark px-4 py-1 rounded ">
+          Add Date
+        </button>
       </div>
     </div>
   );

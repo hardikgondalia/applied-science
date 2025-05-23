@@ -3,6 +3,7 @@ import { fetchCurrencyList } from './utils/api';
 import BaseCurrencySelector from './components/BaseCurrencySelector';
 import ExchangeRateTable from './components/ExchangeRateTable';
 import AddCurrencyModal from './components/AddCurrencyModal';
+import DateRangeSelector from './components/DateRangeSelector'
 
 const App = () => {
   const [currencyList, setCurrencyList] = useState([]);
@@ -11,6 +12,17 @@ const App = () => {
   const [dates, setDates] = useState([new Date().toISOString().split('T')[0]]);
   const [rates, setRates] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
+  const todayStr = new Date().toISOString().split('T')[0];
+
+// Create reorderedDates to pass to ExchangeRateTable
+const reorderedDates = React.useMemo(() => {
+  // Remove today from dates if exists
+  const filteredDates = dates.filter(date => date !== todayStr);
+  // Sort filteredDates descending
+  filteredDates.sort((a, b) => (a < b ? 1 : -1));
+  // Return [today, ...rest descending]
+  return [todayStr, ...filteredDates];
+}, [dates, todayStr]);
 
 useEffect(() => {
   fetchCurrencyList()
@@ -35,10 +47,11 @@ useEffect(() => {
             setBaseCurrency={setBaseCurrency}
             currencyList={currencyList}
           />
+          <DateRangeSelector setDates={setDates} />
           <ExchangeRateTable
             currencies={currencies}
             setCurrencies={setCurrencies}
-            dates={dates}
+            dates={reorderedDates}
             setDates={setDates}
             rates={rates}
             currencyList={currencyList}
