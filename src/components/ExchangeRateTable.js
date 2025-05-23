@@ -64,16 +64,16 @@ const ExchangeRateTable = ({ currencies, setCurrencies, dates, setDates, rates,c
   return (
     <div className="d-flex justify-content-center flex-column  mx-5">
       <div className="d-flex justify-content-center">
-        <div className="table-responsive-wrapper rounded">
-          <table className="table-auto border border-collapse mb-4 table table-success table-striped table-borderless">
+        <div className="table-responsive-wrapper rounded mb-4">
+          <table className="table-auto exchange-table border border-collapse mb-4 table table-light table-striped table-borderless">
             <thead>
               <tr> 
-                <th className="bg-dark text-light sticky-col left-col border p-2">Currency</th>
+                <th className="text-light sticky-col left-col border p-2" style={{ backgroundColor: '#565145' }}>Currency</th>
                 {dates.map((date, idx) => (
-                  <th key={idx} className=" bg-dark text-light date-col border p-2">{date}</th>
+                  <th key={idx} className="text-light date-col border p-2" style={{ backgroundColor: '#565145' }}>{date}</th>
                 ))}
 
-                <th className="sticky-col bg-dark text-light right-col border text-center p-2">Actions</th>
+                <th className="sticky-col text-light right-col border text-center p-2" style={{ backgroundColor: '#565145' }}>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -111,7 +111,7 @@ const ExchangeRateTable = ({ currencies, setCurrencies, dates, setDates, rates,c
           </table>
         </div>
       </div>
-      <div className="d-flex w-75 mx-auto justify-content-end">
+      <div className="d-flex w-100 mx-auto justify-content-end">
         <button onClick={addDate} className="bg-green-500 text-dark px-4 py-1 rounded ">
           Add Date
         </button>

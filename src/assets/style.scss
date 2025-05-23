@@ -28,7 +28,7 @@ select {
 
 .add-currency-button {
   margin-top: -35px;
-  margin-left: 16%;
+  // margin-left: 16%;
 }
 
 .table-responsive-wrapper {
@@ -38,11 +38,13 @@ select {
   border: 1px solid #0000004d;
   overflow: auto;
 }
+.exchange-table{
+  thead{
+  background-color: #565145;
+}
+}
 .table-auto{
   min-width: 100%;
-  th{
-    background-color: #565145;
-  }
 }
 /* Sticky columns */
 .sticky-col {

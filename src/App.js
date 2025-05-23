@@ -58,7 +58,7 @@ useEffect(() => {
             rates={rates}
             currencyList={currencyList}
           />
-             <div className='d-flex w-75 mx-auto justify-content-start ms-5'>
+             <div className='d-flex w-100 mx-auto justify-content-start ms-5'>
           <button onClick={() => setModalOpen(true)} className=' bg-green-500 text-dark px-4 py-1 rounded add-currency-button'>Add Currency</button>
           </div>
           <AddCurrencyModal
