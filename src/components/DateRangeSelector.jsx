@@ -22,7 +22,7 @@ const DateRangeSelector = ({ setDates }) => {
       current.setDate(current.getDate() + 1);
     }
     setDates(dayList);
-  }, [range, setDates]);
+  }, [range]);
 
   return (
     <div className="ms-5 date-range-select">

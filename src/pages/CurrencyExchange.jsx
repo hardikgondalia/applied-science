@@ -57,7 +57,7 @@ const CurrencyExchange = () => {
             <div className='py-4 d-flex flex-column justify-content-between'>
               <BaseCurrencySelector baseCurrency={baseCurrency} setBaseCurrency={setBaseCurrency} currencyList={currencyList} />
               <div className="d-flex w-100 justify-content-start">
-                <button onClick={() => addCurrency()} className="bg-green-500 text-dark px-4 py-1 rounded" disabled={currencies.length > 6}>
+                <button onClick={() => addCurrency()} className="bg-green-500 px-4 py-1 rounded" disabled={currencies.length > 6}>
                   Add Currency
                 </button>
                 {currencies.length > 6 && (<div style={{ 'color': 'red', paddingLeft: '10px', display: 'flex', alignItems: 'center', }}>{message}</div>)}
