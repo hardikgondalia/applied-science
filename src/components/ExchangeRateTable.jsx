@@ -60,7 +60,7 @@ const ExchangeRateTable = ({ currencies, setCurrencies, dates, baseCurrency }) =
   return (
     <div className="d-flex justify-content-center flex-column mx-5">
       <div className="d-flex justify-content-center">
-        <div className="table-responsive-wrapper rounded mb-4">
+        <div className="table-responsive-wrapper rounded mb-5">
           <table className="table-auto exchange-table border border-collapse mb-5 table table-light table-striped table-borderless">
             <thead>
               <tr>
