@@ -1,4 +1,4 @@
-import React, { useState ,useMemo} from 'react';
+import React, { useState, useMemo } from 'react';
 import { fetchCurrencyList } from '../utils/api';
 import BaseCurrencySelector from '../components/BaseCurrencySelector';
 import ExchangeRateTable from '../components/ExchangeRateTable';
@@ -6,38 +6,47 @@ import AddCurrencyModal from '../components/AddCurrencyModal';
 import DateRangeSelector from '../components/DateRangeSelector'
 
 const CurrencyExchange = () => {
-    const [currencyList, setCurrencyList] = useState([]);
+  const [currencyList, setCurrencyList] = useState([]);
   const [baseCurrency, setBaseCurrency] = useState('GBP');
   const [currencies, setCurrencies] = useState(['USD', 'EUR', 'JPY', 'CHF', 'CAD', 'AUD', 'ZAR']);
   const [dates, setDates] = useState([new Date().toISOString().split('T')[0]]);
   const [modalOpen, setModalOpen] = useState(false);
   const todayStr = new Date().toISOString().split('T')[0];
+  const [message, setErrorMessage] = useState("Maximum 7 currencies are allowed");
 
-// Create reorderedDates to pass to ExchangeRateTable
-const reorderedDates = React.useMemo(() => {
-  // Remove today from dates if exists
-  const filteredDates = dates.filter(date => date !== todayStr);
-  // Sort filteredDates descending
-  filteredDates.sort((a, b) => (a < b ? 1 : -1));
-  // Return [today, ...rest descending]
-  return [todayStr, ...filteredDates];
-}, [dates, todayStr]);
+  const addCurrency = () => {
+    if (currencies.length > 6) {
+      setErrorMessage("Maximum 7 currencies are allowed");
+    } else {
+      setModalOpen(true);
+    }
+  }
 
-const fetchCurrency = () => {
-  fetchCurrencyList()
-    .then((data) => {
-      const formatted = Object.entries(data).map(([code, name]) => ({
-        code: code.toUpperCase(), // optional: uppercase like "AED"
-        name,
-      }));
-      setCurrencyList(formatted);
-    })
-    .catch((err) => console.error("Error fetching currency list:", err));
-};
+  // Create reorderedDates to pass to ExchangeRateTable
+  const reorderedDates = React.useMemo(() => {
+    // Remove today from dates if exists
+    const filteredDates = dates.filter(date => date !== todayStr);
+    // Sort filteredDates descending
+    filteredDates.sort((a, b) => (a < b ? 1 : -1));
+    // Return [today, ...rest descending]
+    return [todayStr, ...filteredDates];
+  }, [dates, todayStr]);
 
-useMemo(() => {
-  fetchCurrency();
-}, []);
+  const fetchCurrency = () => {
+    fetchCurrencyList()
+      .then((data) => {
+        const formatted = Object.entries(data).map(([code, name]) => ({
+          code: code.toUpperCase(),
+          name,
+        }));
+        setCurrencyList(formatted);
+      })
+      .catch((err) => console.error("Error fetching currency list:", err));
+  };
+
+  useMemo(() => {
+    fetchCurrency();
+  }, []);
 
   return (
     <div className="p-2 pb-0 currency-block">
@@ -48,9 +57,10 @@ useMemo(() => {
             <div className='py-4'>
               <BaseCurrencySelector baseCurrency={baseCurrency} setBaseCurrency={setBaseCurrency} currencyList={currencyList} />
               <div className="d-flex w-100 justify-content-start">
-                <button onClick={() => setModalOpen(true)} className="bg-green-500 text-dark px-4 py-1 rounded">
+                <button onClick={() => addCurrency()} className="bg-green-500 text-dark px-4 py-1 rounded" disabled={currencies.length > 6}>
                   Add Currency
                 </button>
+                {currencies.length > 6 && (<div style={{ 'color': 'red', paddingLeft: '10px', display: 'flex', alignItems: 'center', }}>{message}</div>)}
               </div>
             </div>
             <DateRangeSelector setDates={setDates} />

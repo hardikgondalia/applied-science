@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { fetchExchangeRates } from '../utils/api';
 import DeleteImage from '../../public/assets/images/delete.png';
+import DeleteConfirmationModal from './DeleteConfirmationModal';
 
 const ExchangeRateTable = ({ currencies, setCurrencies, dates, baseCurrency }) => {
   const [rates, setRates] = useState({});
+  const [showModal, setShowModal] = useState(false);
+  const [currencyToDelete, setCurrencyToDelete] = useState(null);
   const removeCurrency = (currency) => {
     if (currencies.length > 3) {
-      setCurrencies(currencies.filter(c => c !== currency));
+      setCurrencyToDelete(currency);
+      setShowModal(true);
     }
   };
 
@@ -17,6 +21,16 @@ const ExchangeRateTable = ({ currencies, setCurrencies, dates, baseCurrency }) =
     setCurrencies(newCurrencies);
   };
 
+  const handleConfirmDelete = () => {
+    setCurrencies(currencies.filter(c => c !== currencyToDelete));
+    setShowModal(false);
+    setCurrencyToDelete(null);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setCurrencyToDelete(null);
+  };
   useEffect(() => {
     const loadRates = async () => {
       try {
@@ -87,6 +101,12 @@ const ExchangeRateTable = ({ currencies, setCurrencies, dates, baseCurrency }) =
           </table>
         </div>
       </div>
+      <DeleteConfirmationModal
+        show={showModal}
+        onHide={handleCloseModal}
+        onConfirm={handleConfirmDelete}
+        currencyName={currencyToDelete}
+      />
     </div>
   );
 };
