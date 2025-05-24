@@ -44,8 +44,8 @@ useMemo(() => {
       {currencyList.length > 0 ? (
         <>
           <h3 className="heading d-flex justify-content-center w-100">Exchange Rate Viewer</h3>
-          <div className="d-flex align-items-baseline justify-content-center mb-2">
-            <div className='py-4'>
+          <div className="d-flex align-items-stretch justify-content-center mb-2">
+            <div className='py-4 d-flex flex-column justify-content-between'>
               <BaseCurrencySelector baseCurrency={baseCurrency} setBaseCurrency={setBaseCurrency} currencyList={currencyList} />
               <div className="d-flex w-100 justify-content-start">
                 <button onClick={() => setModalOpen(true)} className="bg-green-500 text-dark px-4 py-1 rounded">

@@ -9,9 +9,11 @@
 .heading {
   color: #565145;
 }
-.date-range-select{
+
+.date-range-select {
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
+
 .currency-select {
   border-color: #b9acac2e;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
@@ -83,4 +85,5 @@ thead .sticky-col {
   right: 0;
   bottom: 0;
   padding: 20px 0;
+  z-index: 99;
 }
